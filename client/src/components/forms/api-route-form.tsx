@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { BaseForm, FormField, type FormState, VALIDATION_RULES } from "./base-form";
 import { User, Mail, MessageSquare } from "lucide-react";
+import { ERROR_MESSAGES } from "@/lib/errors";
 
 export function ApiRouteForm() {
   const [isPending, setIsPending] = useState(false);
@@ -42,7 +43,7 @@ export function ApiRouteForm() {
       } else {
         setState({
           success: false,
-          message: result.message || "Something went wrong",
+          message: result.message || ERROR_MESSAGES.SOMETHING_WENT_WRONG,
           errors: result.errors,
           data: data, // Preserve the submitted data for form re-population
         });
@@ -51,8 +52,8 @@ export function ApiRouteForm() {
       console.error("Fetch error:", error);
       setState({
         success: false,
-        message: "Network error occurred",
-        errors: { _form: ["Network error occurred"] },
+        message: ERROR_MESSAGES.NETWORK_ERROR,
+        errors: { _form: [ERROR_MESSAGES.NETWORK_ERROR] },
         data: data, // Preserve the submitted data even on network errors
       });
     } finally {
